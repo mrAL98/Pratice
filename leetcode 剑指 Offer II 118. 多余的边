@@ -1,0 +1,50 @@
+/*
+https://leetcode.cn/problems/7LpjUW/description/
+*/
+
+class Solution {
+    int n;
+    vector<int> father;
+public:
+    void init () {
+        for (int i = 0; i < n; i++) {
+            father[i] = i;
+        }
+        return;
+    }
+
+    int find (int u) {
+        if (u != father[u]) {
+            father[u] = find(father[u]);
+        }
+        return father[u];
+    }
+
+    void join (int u, int v) {
+        u = find(u);
+        v = find(v);
+        if (u != v) {
+            father[v] = u;
+        }
+        return;
+    }
+
+    bool same (int u, int v) {
+        return find(u) == find(v);
+    }
+
+    vector<int> findRedundantConnection(vector<vector<int>>& edges) {
+        this->n = edges.size(); // 可能有 edges.size() 个根节点
+        father.resize(n + 1, 0);
+        init();
+        for (auto x : edges) {
+            int a = x[0], b = x[1];
+            if (same(a, b)) {
+                return x;
+            } else {
+                join(a, b);
+            }
+        }
+        return {};
+    }
+};
