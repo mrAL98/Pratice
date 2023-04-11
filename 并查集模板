@@ -1,0 +1,33 @@
+int n; // 可能的根节点数目
+vector<int> father; // size 可以设为 n + 1
+
+// 初始化并查集
+void init () {
+    for (int i = 0; i < n; i++) {
+        father[i] = i;
+    }
+    return;
+}
+
+// 寻找根节点
+int find (int u) {
+    if (u != father[u]) {
+        father[u] = find(father[u]);
+    }
+    return father[u];
+}
+
+// 加入并查集
+void join (int u, int v) {
+    u = find(u);
+    v = find(v);
+    if (u != v) {
+        father[v] = u;
+    }
+    return;
+}
+
+// 判断根节点是否相同
+bool same (int u, int v) {
+    return find(u) == find(v);
+}
