@@ -1,22 +1,18 @@
-int n; // 可能的根节点数目
-vector<int> father; // size 可以设为 n + 1
+int n;
+vector<int> father;
 
-// 初始化并查集
 void init () {
-    iota(father.begin(), father.end());
+    iota(father.begin(), father.end(), 0);
 }
 
-// 寻找根节点
 int find (int u) {
     return u == father[u] ? father[u] : father[u] = find(father[u]);
 }
 
-// 加入并查集
 void join (int u, int v) {
     if (find(u) != find(v)) father[find(u)] = find(v);
 }
 
-// 判断根节点是否相同
 bool same (int u, int v) {
     return find(u) == find(v);
 }
